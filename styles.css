@@ -1,0 +1,80 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #FAE895;
+  overflow: hidden; /* Prevent scrollbars when bubbles cover the screen */
+}
+
+.bubble-wrap {
+  width: 100vw; /* Set the width to cover the viewport width */
+  height: 100vh; /* Set the height to cover the viewport height */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Dynamic columns */
+  gap: 8px;
+  padding: 0; /* No need for padding */
+}
+
+.bubble {
+  width: 100px;
+  height: 100px;
+  background-color: #86c6ff;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: float 3s infinite alternate;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s; /* Added box-shadow transition */
+  position: relative;
+  z-index: 1; /* Ensure bubble is above highlight */
+  overflow: hidden; /* Hide highlight overflow */
+}
+
+.bubble.popped {
+  animation: none;
+  background-color: transparent;
+  transform: scale(0);
+  box-shadow: none; /* No shadow when popped */
+}
+
+.bubble:before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle at 60% 0, transparent 20%, rgba(255, 255, 255, 0.9) 60%);
+  transform: rotate(-45deg);
+  border-radius: 50%;
+}
+
+/* Added bubble shadow */
+.bubble:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  z-index: -1; /* Behind the bubble */
+  transform: translateY(8px); /* Adjust shadow position */
+  transition: transform 0.2s; /* Add shadow transition */
+}
+
+/* Highlight on hover */
+.bubble:hover {
+  transform: scale(1.1);
+}
+
+/* Highlight when active (clicked) */
+.bubble.popped:hover {
+  transform: scale(1);
+}
+
+/* Move highlight on hover */
+.bubble:hover:after {
+  transform: translateY(0);
+}
